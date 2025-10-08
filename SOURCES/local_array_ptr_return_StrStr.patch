@@ -1,0 +1,14 @@
+diff --git a/src/minicom.c b/src/minicom.c
+index c9ce75c..1721b92 100644
+--- a/src/minicom.c
++++ b/src/minicom.c
+@@ -390,7 +390,8 @@ wchar_t *StrStr(wchar_t *str1, wchar_t *str2, int case_matters)
+   size_t len1 = wcslen(str1) + 1;
+   size_t len2 = wcslen(str2) + 1;
+   wchar_t tmpstr1[len1], tmpstr2[len2];
+-  return wcsstr(upcase(tmpstr1, str1), upcase(tmpstr2, str2));
++  wchar_t *needle = wcsstr(upcase(tmpstr1, str1), upcase(tmpstr2, str2));
++  return needle ? str1 + (needle - tmpstr1) : NULL;
+ }
+ 
+ static void drawcite(WIN *w, int y, int citey, int start, int end)
