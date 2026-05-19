@@ -1,7 +1,7 @@
 Summary: A text-based modem control and terminal emulation program
 Name: minicom
 Version: 2.9
-Release: 4%{?dist}
+Release: 5%{?dist}
 URL: https://salsa.debian.org/minicom-team/minicom
 # The file 'src/wildmat.c' is LicenseRef-Fedora-Public-Domain.
 # Some LGPL-2.0-or-later files (e.g., 'lib/getopt.c', 'lib/error.c')
@@ -15,6 +15,10 @@ License: GPL-2.0-or-later AND LGPL-2.0-or-later AND LicenseRef-Fedora-Public-Dom
 Source0: https://salsa.debian.org/minicom-team/minicom/-/archive/%{version}/%{name}-%{version}.tar.gz
 Patch0: local_array_ptr_return_StrStr.patch
 Patch1: memleaks_term_socket_connect_tcp.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=2407160
+# https://salsa.debian.org/minicom-team/minicom/-/merge_requests/26
+Patch2: fix_baudrate_setting.patch
 
 BuildRequires: make
 BuildRequires: lockdev-devel ncurses-devel autoconf automake gettext-devel
@@ -69,6 +73,10 @@ mkdir -p %{buildroot}%{_sysconfdir}
 
 
 %changelog
+* Tue Dec 16 2025 Fedor Vorobev <fvorobev@redhat.com> - 2.9-5
+- Fix baudrate setting (backport upstream commit 964ae563)
+  Resolves: RHEL-136237
+
 * Tue Oct 29 2024 Troy Dawson <tdawson@redhat.com> - 2.9-4
 - Bump release for October 2024 mass rebuild:
   Resolves: RHEL-64018
